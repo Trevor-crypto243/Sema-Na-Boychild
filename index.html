@@ -1,193 +1,556 @@
 <!DOCTYPE html>
+<html class="light" lang="en">
 
-<html class="light" lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Sema na Boychild</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com" rel="preconnect"/>
-<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;700;900&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
-<script>
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Sema na Boychild</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    <script>
         tailwind.config = {
             darkMode: "class",
             theme: {
                 extend: {
                     colors: {
-                        "primary": "#2E7D32",
-                        "secondary": "#4CAF50",
-                        "background-light": "#f6f8f6",
-                        "background-dark": "#112112",
+                        "primary": {
+                            50: '#f0f9f0',
+                            100: '#dcf2dc',
+                            200: '#bce4bc',
+                            300: '#8fd18f',
+                            400: '#5cb55c',
+                            500: '#3a9a3a',
+                            600: '#2E7D32', // primary
+                            700: '#27632a',
+                            800: '#224f25',
+                            900: '#1d4120',
+                        },
+                        "secondary": {
+                            50: '#f3faf3',
+                            100: '#e3f5e3',
+                            200: '#c8eac8',
+                            300: '#9bd99b',
+                            400: '#66c066',
+                            500: '#4CAF50', // secondary
+                            600: '#3a9a3d',
+                            700: '#317a34',
+                            800: '#2b612d',
+                            900: '#255027',
+                        },
+                        "gray": {
+                            50: '#f9fafb',
+                            100: '#f3f4f6',
+                            200: '#e5e7eb',
+                            300: '#d1d5db',
+                            400: '#9ca3af',
+                            500: '#6b7280',
+                            600: '#4b5563',
+                            700: '#374151',
+                            800: '#1f2937',
+                            900: '#111827',
+                        },
+                        "background-light": "#f8faf9",
+                        "background-dark": "#0d1a0d",
                         "light-green": "#A5D6A7"
                     },
                     fontFamily: {
                         "display": ["Public Sans", "sans-serif"]
                     },
                     borderRadius: {
-                        "DEFAULT": "0.25rem",
-                        "lg": "0.5rem",
-                        "xl": "0.75rem",
+                        "DEFAULT": "0.375rem",
+                        "lg": "0.75rem",
+                        "xl": "1rem",
+                        "2xl": "1.5rem",
                         "full": "9999px"
                     },
+                    boxShadow: {
+                        'soft': '0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03)',
+                        'card': '0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.025)',
+                        'elevated': '0 20px 25px -5px rgba(0, 0, 0, 0.08), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
+                    },
+                    spacing: {
+                        '18': '4.5rem',
+                        '88': '22rem',
+                        '128': '32rem',
+                    }
                 },
             },
         }
     </script>
-<style>
+    <style>
         .material-symbols-outlined {
             font-variation-settings:
-            'FILL' 0,
-            'wght' 400,
-            'GRAD' 0,
-            'opsz' 24
+                'FILL' 0,
+                'wght' 400,
+                'GRAD' 0,
+                'opsz' 24
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            min-height: max(884px, 100dvh);
+        }
+        
+        .hero-gradient {
+            background: linear-gradient(135deg, rgba(46, 125, 50, 0.9) 0%, rgba(76, 175, 80, 0.7) 100%);
+        }
+        
+        .stat-card {
+            transition: all 0.3s ease;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        .testimonial-card {
+            transition: all 0.3s ease;
+        }
+        
+        .testimonial-card:hover {
+            transform: translateY(-3px);
+        }
+        
+        .program-card {
+            transition: all 0.3s ease;
+        }
+        
+        .program-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .topic-pill {
+            transition: all 0.2s ease;
+        }
+        
+        .topic-pill:hover {
+            transform: scale(1.05);
+        }
+        
+        .cta-button {
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .cta-button:after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+        
+        .cta-button:hover:after {
+            left: 100%;
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.8s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .section-divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(76, 175, 80, 0.3), transparent);
         }
     </style>
-<style>
-    body {
-      min-height: max(884px, 100dvh);
-    }
-  </style>
-  </head>
-<body class="bg-background-light dark:bg-background-dark font-display">
-<div class="relative flex h-auto min-h-screen w-full flex-col group/design-root overflow-x-hidden">
-<div class="@container">
-<div class="@[480px]:p-4">
-<div class="flex min-h-[480px] flex-col gap-6 bg-cover bg-center bg-no-repeat @[480px]:gap-8 @[480px]:rounded-lg items-start justify-end px-4 pb-10 @[480px]:px-10" data-alt="A thoughtful but hopeful young boy" style='background-image: linear-gradient(rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.5) 100%), url("https://lh3.googleusercontent.com/aida-public/AB6AXuDHG5BMKnBiqIM4PEEwI72BKoCPgpByheDkAQLnqK84Dp0i7TBJe__NoOzyUOJ7Emj1Jdnc5K2bdIILxbzyWgvKJzuY_qD8qZf6jVv94ei2syeVwtFZRZuGsjRJQu7zh3IcP1OPZcs4uU9bPmQK_TZs-HFR-nmUN4QAWSI7pEAYeocCm5felhj5jaD3W7TUjTPXu2oXHA8TPNN7PcsgaB778W0NbzQSWoCgE1v9ZTM89ECF_uTHNU6P1KuS3z4ZG65BBPLMa_6s4EE");'>
-<div class="flex flex-col gap-2 text-left">
-<h1 class="text-white text-5xl font-black leading-tight tracking-[-0.033em] @[480px]:text-6xl @[480px]:font-black @[480px]:leading-tight @[480px]:tracking-[-0.033em] font-display">
+</head>
+
+<body class="bg-background-light dark:bg-background-dark font-display text-gray-700 dark:text-gray-300">
+    <div class="relative flex h-auto min-h-screen w-full flex-col group/design-root overflow-x-hidden">
+        
+        <!-- Enhanced Header -->
+        <header class="bg-white/90 dark:bg-gray-900/90 backdrop-blur-md sticky top-0 z-50 w-full border-b border-gray-200 dark:border-gray-800 shadow-soft">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex justify-between items-center h-16 md:h-20">
+                    <a href="#" class="flex items-center space-x-2">
+                        <div class="w-10 h-10 rounded-full bg-gradient-to-br from-primary-600 to-secondary-500 flex items-center justify-center">
+                            <span class="text-white font-bold text-lg">S</span>
+                        </div>
+                        <span class="text-2xl font-black text-primary-700 dark:text-white tracking-tight">semanaboychild.org</span>
+                    </a>
+                    <nav class="hidden md:flex space-x-8">
+                        <a href="#programs" class="text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-secondary-400 font-semibold transition-colors duration-200">Our Programs</a>
+                        <a href="#stats" class="text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-secondary-400 font-semibold transition-colors duration-200">The Challenge</a>
+                        <a href="#partner" class="text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-secondary-400 font-semibold transition-colors duration-200">Partner With Us</a>
+                        <a href="#contact" class="text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-secondary-400 font-semibold transition-colors duration-200">Contact</a>
+                    </nav>
+                    <a href="#involved" class="hidden md:flex min-w-[120px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-11 px-5 bg-gradient-to-r from-primary-600 to-secondary-500 text-white text-base font-bold leading-normal tracking-wide transition-all duration-300 hover:shadow-lg hover:from-primary-700 hover:to-secondary-600 cta-button">
+                        <span class="truncate">Get Involved</span>
+                    </a>
+                    <button class="md:hidden p-2 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800">
+                        <span class="material-symbols-outlined">menu</span>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Enhanced Hero Section -->
+        <div class="@container relative overflow-hidden">
+            <div class="@[480px]:p-4">
+                <div class="flex min-h-[600px] flex-col gap-8 bg-cover bg-center bg-no-repeat @[480px]:gap-10 @[480px]:rounded-xl items-center justify-center px-4 py-16 @[480px]:px-10 relative" data-alt="A thoughtful but hopeful young boy" style='background-image: linear-gradient(rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.6) 100%), url("https://storage.googleapis.com/stitch-prod-prompts/web-prod/images/01J6G73M65M7YF3C6V1M58M2J7.jpeg");'>
+                    
+                    <!-- Background decorative elements -->
+                    <div class="absolute top-0 left-0 w-full h-full overflow-hidden opacity-10">
+                        <div class="absolute -top-24 -right-24 w-64 h-64 rounded-full bg-primary-500"></div>
+                        <div class="absolute -bottom-32 -left-32 w-80 h-80 rounded-full bg-secondary-400"></div>
+                    </div>
+                    
+                    <div class="flex flex-col gap-6 text-center max-w-4xl mx-auto z-10 fade-in">
+                        <!-- Organization Name - Made More Prominent -->
+                        <div class="mb-2">
+                            <h2 class="text-white text-4xl md:text-5xl font-black tracking-tight leading-tight @[480px]:text-6xl @[480px]:font-black @[480px]:leading-tight font-display">
+                                Sema Na <span class="bg-gradient-to-r from-primary-400 to-secondary-300 bg-clip-text text-transparent">Boychild</span>
+                            </h2>
+                            <div class="h-1 w-24 bg-gradient-to-r from-primary-400 to-secondary-300 mx-auto mt-4 rounded-full"></div>
+                        </div>
+                        
+                        <h1 class="text-white text-3xl md:text-4xl font-bold leading-tight tracking-[-0.02em] @[480px]:text-5xl @[480px]:font-black @[480px]:leading-tight @[480px]:tracking-[-0.022em] font-display">
                             The Unseen Struggles of Our Boys
                         </h1>
-<h2 class="text-white text-base font-normal leading-normal @[480px]:text-lg @[480px]:font-normal @[480px]:leading-normal font-display">
-                            Sema na Boychild is an initiative dedicated to shedding light on the challenges young men face and providing a platform for their voices to be heard.
-                        </h2>
-</div>
-<button class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-5 bg-primary text-white text-base font-bold leading-normal tracking-[0.015em] font-display transition-colors hover:bg-primary/90">
-<span class="truncate">Get Involved</span>
-</button>
-</div>
-</div>
-</div>
-<div class="p-4">
-<div class="flex flex-wrap gap-4">
-<div class="flex min-w-[158px] flex-1 flex-col gap-2 rounded-lg bg-background-light dark:bg-background-dark p-6 border border-gray-200 dark:border-gray-700 shadow-lg">
-<p class="text-gray-900 dark:text-gray-100 text-lg font-bold leading-normal font-display">Mental Health Crisis</p>
-<p class="text-gray-900 dark:text-gray-100 tracking-light text-3xl font-black leading-tight font-display">1 in 5</p>
-<p class="text-secondary text-lg font-bold leading-normal font-display">+15%</p>
-</div>
-<div class="flex min-w-[158px] flex-1 flex-col gap-2 rounded-lg bg-background-light dark:bg-background-dark p-6 border border-gray-200 dark:border-gray-700 shadow-lg">
-<p class="text-gray-900 dark:text-gray-100 text-lg font-bold leading-normal font-display">Education Gap</p>
-<p class="text-gray-900 dark:text-gray-100 tracking-light text-3xl font-black leading-tight font-display">60%</p>
-<p class="text-red-600 text-lg font-bold leading-normal font-display">-5%</p>
-</div>
-<div class="flex min-w-[158px] flex-1 flex-col gap-2 rounded-lg bg-background-light dark:bg-background-dark p-6 border border-gray-200 dark:border-gray-700 shadow-lg">
-<p class="text-gray-900 dark:text-gray-100 text-lg font-bold leading-normal font-display">Societal Pressure</p>
-<p class="text-gray-900 dark:text-gray-100 tracking-light text-3xl font-black leading-tight font-display">78%</p>
-<p class="text-secondary text-lg font-bold leading-normal font-display">+10%</p>
-</div>
-</div>
-</div>
-<div class="flex flex-col p-4 gap-3">
-<details class="flex flex-col rounded-lg bg-light-green/20 dark:bg-light-green/10 px-4 group transition-all duration-300" open="">
-<summary class="flex cursor-pointer items-center justify-between gap-6 py-4">
-<p class="text-gray-900 dark:text-white text-lg font-bold leading-normal font-display">Mental Health</p>
-<span class="material-symbols-outlined text-gray-900 dark:text-white group-open:rotate-180 transition-transform">expand_more</span>
-</summary>
-<p class="text-gray-700 dark:text-gray-300 text-base font-normal leading-normal pb-4 font-display">
-                    Boys are less likely to seek help for mental health issues due to societal expectations of masculinity. We are working to break the stigma and provide accessible resources for young men to open up and find support.
-                </p>
-</details>
-<details class="flex flex-col rounded-lg bg-light-green/20 dark:bg-light-green/10 px-4 group transition-all duration-300">
-<summary class="flex cursor-pointer items-center justify-between gap-6 py-4">
-<p class="text-gray-900 dark:text-white text-lg font-bold leading-normal font-display">Education</p>
-<span class="material-symbols-outlined text-gray-900 dark:text-white group-open:rotate-180 transition-transform">expand_more</span>
-</summary>
-<p class="text-gray-700 dark:text-gray-300 text-base font-normal leading-normal pb-4 font-display">
-                    Many boys are falling behind in school, leading to limited opportunities later in life. Our programs aim to provide academic support and mentorship to help them succeed.
-                </p>
-</details>
-<details class="flex flex-col rounded-lg bg-light-green/20 dark:bg-light-green/10 px-4 group transition-all duration-300">
-<summary class="flex cursor-pointer items-center justify-between gap-6 py-4">
-<p class="text-gray-900 dark:text-white text-lg font-bold leading-normal font-display">Societal Pressure</p>
-<span class="material-symbols-outlined text-gray-900 dark:text-white group-open:rotate-180 transition-transform">expand_more</span>
-</summary>
-<p class="text-gray-700 dark:text-gray-300 text-base font-normal leading-normal pb-4 font-display">
-                    The pressure to conform to rigid stereotypes of masculinity can be overwhelming. We're creating safe spaces for boys to express themselves and redefine what it means to be a man.
-                </p>
-</details>
-</div>
-<div class="py-12">
-<h2 class="text-3xl font-black text-center text-gray-900 dark:text-white mb-8 font-display">Voices of Change</h2>
-<div class="flex overflow-x-auto [-ms-scrollbar-style:none] [scrollbar-width:none] [&amp;::-webkit-scrollbar]:hidden">
-<div class="flex items-stretch p-4 gap-6">
-<div class="flex h-full flex-1 flex-col gap-4 rounded-xl min-w-72 bg-background-light dark:bg-background-dark border border-gray-200 dark:border-gray-700 p-6 shadow-md relative">
-<span class="absolute top-4 left-4 text-6xl text-light-green font-display opacity-50">“</span>
-<div class="mt-8">
-<p class="text-gray-700 dark:text-gray-300 text-base font-normal leading-normal font-display">
-                                "Sema na Boychild gave me the courage to speak up and seek help. I'm now on a path to a healthier and happier life."
+                        <h2 class="text-white text-xl font-semibold leading-normal max-w-2xl mx-auto @[480px]:text-2xl @[480px]:font-bold @[480px]:leading-normal font-display">
+                            Equipping Boys Today, Empowering Men Tomorrow                         </h2>
+                    </div>
+                    <div class="flex flex-col sm:flex-row gap-4 z-10 fade-in" style="animation-delay: 0.2s">
+                        <a href="#involved" class="flex min-w-[160px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-12 px-8 bg-gradient-to-r from-primary-600 to-secondary-500 text-white text-base font-bold leading-normal tracking-wide shadow-lg transition-all duration-300 hover:shadow-xl hover:from-primary-700 hover:to-secondary-600 cta-button">
+                            <span class="truncate">Get Involved Today</span>
+                        </a>
+                        <a href="#programs" class="flex min-w-[160px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-12 px-8 bg-white/20 backdrop-blur-sm border border-white/30 text-white text-base font-semibold leading-normal tracking-wide transition-all duration-300 hover:bg-white/30 hover:shadow-lg">
+                            <span class="truncate">Our Programs</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Stats Section with Improved Cards -->
+        <div id="stats" class="py-16 px-4 bg-gradient-to-b from-white to-gray-50 dark:from-gray-900 dark:to-background-dark">
+            <div class="max-w-6xl mx-auto">
+                <h2 class="text-4xl font-black text-center text-gray-900 dark:text-white mb-4 font-display tracking-tight">The Reality in Numbers</h2>
+                <p class="text-center text-gray-600 dark:text-gray-400 text-lg max-w-2xl mx-auto mb-12">Understanding the challenges is the first step toward creating meaningful change in the lives of young men.</p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+                    <div class="stat-card flex flex-col gap-4 rounded-2xl bg-white dark:bg-gray-800 p-8 border border-gray-100 dark:border-gray-700 shadow-card hover:shadow-elevated">
+                        <div class="flex items-center justify-center w-16 h-16 rounded-full bg-primary-50 dark:bg-primary-900/30 text-primary-600 dark:text-primary-400 mb-2">
+                            <span class="material-symbols-outlined text-3xl">psychology</span>
+                        </div>
+                        <p class="text-gray-900 dark:text-gray-100 text-xl font-bold leading-tight font-display">Mental Health Crisis</p>
+                        <p class="text-primary-600 dark:text-primary-400 tracking-tight text-5xl font-black leading-tight font-display">1 in 5</p>
+                        <p class="text-gray-600 dark:text-gray-400 text-lg">Boys report mental health struggles, often suffering in silence due to societal expectations.</p>
+                    </div>
+                    <div class="stat-card flex flex-col gap-4 rounded-2xl bg-white dark:bg-gray-800 p-8 border border-gray-100 dark:border-gray-700 shadow-card hover:shadow-elevated">
+                        <div class="flex items-center justify-center w-16 h-16 rounded-full bg-primary-50 dark:bg-primary-900/30 text-primary-600 dark:text-primary-400 mb-2">
+                            <span class="material-symbols-outlined text-3xl">school</span>
+                        </div>
+                        <p class="text-gray-900 dark:text-gray-100 text-xl font-bold leading-tight font-display">Education Gap</p>
+                        <p class="text-primary-600 dark:text-primary-400 tracking-tight text-5xl font-black leading-tight font-display">60%</p>
+                        <p class="text-gray-600 dark:text-gray-400 text-lg">Of school dropouts in some regions are boys, highlighting a growing educational disparity.</p>
+                    </div>
+                    <div class="stat-card flex flex-col gap-4 rounded-2xl bg-white dark:bg-gray-800 p-8 border border-gray-100 dark:border-gray-700 shadow-card hover:shadow-elevated">
+                        <div class="flex items-center justify-center w-16 h-16 rounded-full bg-primary-50 dark:bg-primary-900/30 text-primary-600 dark:text-primary-400 mb-2">
+                            <span class="material-symbols-outlined text-3xl">diversity_3</span>
+                        </div>
+                        <p class="text-gray-900 dark:text-gray-100 text-xl font-bold leading-tight font-display">Societal Pressure</p>
+                        <p class="text-primary-600 dark:text-primary-400 tracking-tight text-5xl font-black leading-tight font-display">78%</p>
+                        <p class="text-gray-600 dark:text-gray-400 text-lg">Feel pressured to hide their emotions, conforming to harmful stereotypes of masculinity.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Programs Section with Enhanced Cards -->
+        <section id="programs" class="py-16 px-4 bg-white dark:bg-gray-900">
+            <div class="max-w-6xl mx-auto">
+                <div class="text-center mb-12">
+                    <h2 class="text-4xl font-black text-gray-900 dark:text-white mb-4 font-display tracking-tight">Our One-Year Mentorship Journey</h2>
+                    <div class="h-1 w-20 bg-gradient-to-r from-primary-500 to-secondary-400 mx-auto rounded-full mb-6"></div>
+                    <p class="text-center text-gray-700 dark:text-gray-300 text-lg max-w-3xl mx-auto">Our comprehensive one-year training program is composed of three modules, carefully designed to address specific challenges and foster holistic development. </p>
+                </div>
+                
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div class="program-card flex flex-col rounded-2xl bg-gradient-to-b from-gray-50 to-white dark:from-gray-800 dark:to-gray-900 p-8 border border-gray-200 dark:border-gray-700 shadow-card hover:shadow-elevated">
+                        <div class="flex items-center mb-6">
+                            <div class="flex items-center justify-center w-12 h-12 rounded-full bg-primary-100 dark:bg-primary-900/40 text-primary-600 dark:text-primary-400 mr-4">
+                                <span class="text-xl font-bold">1</span>
+                            </div>
+                            <h3 class="font-black text-2xl text-primary-600 dark:text-primary-400">Basic Foundation </h3>
+                        </div>
+                        <p class="text-gray-700 dark:text-gray-300 mb-6 flex-grow">This initial 3-day module establishes a solid foundation for growth and personal development. </p>
+                        <div class="space-y-3">
+                            <div class="flex items-start"><span class="material-symbols-outlined text-primary-500 dark:text-primary-400 mr-2 text-lg">check_circle</span><span class="text-gray-700 dark:text-gray-300">Spiritual development </span></div>
+                            <div class="flex items-start"><span class="material-symbols-outlined text-primary-500 dark:text-primary-400 mr-2 text-lg">check_circle</span><span class="text-gray-700 dark:text-gray-300">Leadership skills </span></div>
+                            <div class="flex items-start"><span class="material-symbols-outlined text-primary-500 dark:text-primary-400 mr-2 text-lg">check_circle</span><span class="text-gray-700 dark:text-gray-300">Social media management </span></div>
+                            <div class="flex items-start"><span class="material-symbols-outlined text-primary-500 dark:text-primary-400 mr-2 text-lg">check_circle</span><span class="text-gray-700 dark:text-gray-300">Effective communication </span></div>
+                            <div class="flex items-start"><span class="material-symbols-outlined text-primary-500 dark:text-primary-400 mr-2 text-lg">check_circle</span><span class="text-gray-700 dark:text-gray-300">Emotional management </span></div>
+                        </div>
+                    </div>
+                    <div class="program-card flex flex-col rounded-2xl bg-gradient-to-b from-gray-50 to-white dark:from-gray-800 dark:to-gray-900 p-8 border border-gray-200 dark:border-gray-700 shadow-card hover:shadow-elevated">
+                        <div class="flex items-center mb-6">
+                            <div class="flex items-center justify-center w-12 h-12 rounded-full bg-primary-100 dark:bg-primary-900/40 text-primary-600 dark:text-primary-400 mr-4">
+                                <span class="text-xl font-bold">2</span>
+                            </div>
+                            <h3 class="font-black text-2xl text-primary-600 dark:text-primary-400">Empowerment </h3>
+                        </div>
+                        <p class="text-gray-700 dark:text-gray-300 mb-6 flex-grow">These stages involve deeper engagement and specialized training tailored to each group's specific needs and challenges.  28]</p>
+                        <div class="space-y-3">
+                            <div class="flex items-start"><span class="material-symbols-outlined text-primary-500 dark:text-primary-400 mr-2 text-lg">check_circle</span><span class="text-gray-700 dark:text-gray-300">Engagement with community leaders </span></div>
+                            <div class="flex items-start"><span class="material-symbols-outlined text-primary-500 dark:text-primary-400 mr-2 text-lg">check_circle</span><span class="text-gray-700 dark:text-gray-300">Empowerment for caregivers </span></div>
+                            <div class="flex items-start"><span class="material-symbols-outlined text-primary-500 dark:text-primary-400 mr-2 text-lg">check_circle</span><span class="text-gray-700 dark:text-gray-300">Comprehensive mentor training </span></div>
+                        </div>
+                    </div>
+                    <div class="program-card flex flex-col rounded-2xl bg-gradient-to-b from-gray-50 to-white dark:from-gray-800 dark:to-gray-900 p-8 border border-gray-200 dark:border-gray-700 shadow-card hover:shadow-elevated">
+                        <div class="flex items-center mb-6">
+                            <div class="flex items-center justify-center w-12 h-12 rounded-full bg-primary-100 dark:bg-primary-900/40 text-primary-600 dark:text-primary-400 mr-4">
+                                <span class="text-xl font-bold">3</span>
+                            </div>
+                            <h3 class="font-black text-2xl text-primary-600 dark:text-primary-400">Community Integration</h3>
+                        </div>
+                        <p class="text-gray-700 dark:text-gray-300 mb-6 flex-grow">"Our programs and topics are uniquely designed to match the vibrant spirit and diverse needs of youth in every community." </p>
+                        <div class="space-y-3">
+                            <div class="flex items-start"><span class="material-symbols-outlined text-primary-500 dark:text-primary-400 mr-2 text-lg">check_circle</span><span class="text-gray-700 dark:text-gray-300">Tailored to local context</span></div>
+                            <div class="flex items-start"><span class="material-symbols-outlined text-primary-500 dark:text-primary-400 mr-2 text-lg">check_circle</span><span class="text-gray-700 dark:text-gray-300">Sustainable impact focus </span></div>
+                            <div class="flex items-start"><span class="material-symbols-outlined text-primary-500 dark:text-primary-400 mr-2 text-lg">check_circle</span><span class="text-gray-700 dark:text-gray-300">Community-led initiatives</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Topics Section with Enhanced Pills -->
+        <section class="py-16 px-4 bg-gray-50 dark:bg-gray-800/50">
+            <div class="max-w-6xl mx-auto">
+                <h2 class="text-4xl font-black text-center text-gray-900 dark:text-white mb-4 font-display tracking-tight">A Holistic Approach to Growth</h2>
+                <p class="text-center text-gray-600 dark:text-gray-400 text-lg max-w-2xl mx-auto mb-12">We address the full spectrum of challenges facing today's young men through comprehensive, evidence-based programs.</p>
+                
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
+                    <div class="topic-pill bg-white dark:bg-gray-800 p-5 rounded-xl border border-gray-200 dark:border-gray-700 shadow-soft text-center transition-all duration-200 hover:bg-primary-50 dark:hover:bg-primary-900/20 hover:border-primary-200 dark:hover:border-primary-700"><p class="font-semibold text-gray-900 dark:text-white">Teenage Boy & Sexuality </p></div>
+                    <div class="topic-pill bg-white dark:bg-gray-800 p-5 rounded-xl border border-gray-200 dark:border-gray-700 shadow-soft text-center transition-all duration-200 hover:bg-primary-50 dark:hover:bg-primary-900/20 hover:border-primary-200 dark:hover:border-primary-700"><p class="font-semibold text-gray-900 dark:text-white">Becoming a Gentleman </p></div>
+                    <div class="topic-pill bg-white dark:bg-gray-800 p-5 rounded-xl border border-gray-200 dark:border-gray-700 shadow-soft text-center transition-all duration-200 hover:bg-primary-50 dark:hover:bg-primary-900/20 hover:border-primary-200 dark:hover:border-primary-700"><p class="font-semibold text-gray-900 dark:text-white">Drug & Substance Abuse </p></div>
+                    <div class="topic-pill bg-white dark:bg-gray-800 p-5 rounded-xl border border-gray-200 dark:border-gray-700 shadow-soft text-center transition-all duration-200 hover:bg-primary-50 dark:hover:bg-primary-900/20 hover:border-primary-200 dark:hover:border-primary-700"><p class="font-semibold text-gray-900 dark:text-white">Mental Health </p></div>
+                    <div class="topic-pill bg-white dark:bg-gray-800 p-5 rounded-xl border border-gray-200 dark:border-gray-700 shadow-soft text-center transition-all duration-200 hover:bg-primary-50 dark:hover:bg-primary-900/20 hover:border-primary-200 dark:hover:border-primary-700"><p class="font-semibold text-gray-900 dark:text-white">Academic Success </p></div>
+                    <div class="topic-pill bg-white dark:bg-gray-800 p-5 rounded-xl border border-gray-200 dark:border-gray-700 shadow-soft text-center transition-all duration-200 hover:bg-primary-50 dark:hover:bg-primary-900/20 hover:border-primary-200 dark:hover:border-primary-700"><p class="font-semibold text-gray-900 dark:text-white">Financial Literacy </p></div>
+                    <div class="topic-pill bg-white dark:bg-gray-800 p-5 rounded-xl border border-gray-200 dark:border-gray-700 shadow-soft text-center transition-all duration-200 hover:bg-primary-50 dark:hover:bg-primary-900/20 hover:border-primary-200 dark:hover:border-primary-700"><p class="font-semibold text-gray-900 dark:text-white">Spiritual Formation </p></div>
+                    <div class="topic-pill bg-white dark:bg-gray-800 p-5 rounded-xl border border-gray-200 dark:border-gray-700 shadow-soft text-center transition-all duration-200 hover:bg-primary-50 dark:hover:bg-primary-900/20 hover:border-primary-200 dark:hover:border-primary-700"><p class="font-semibold text-gray-900 dark:text-white">Career Guidance </p></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonials Section with Enhanced Cards -->
+        <section class="py-16 bg-white dark:bg-gray-900">
+            <div class="max-w-6xl mx-auto px-4">
+                <h2 class="text-4xl font-black text-center text-gray-900 dark:text-white mb-4 font-display tracking-tight">Voices of Change</h2>
+                <p class="text-center text-gray-600 dark:text-gray-400 text-lg max-w-2xl mx-auto mb-12">Hear from those whose lives have been transformed through our programs.</p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="testimonial-card flex flex-col rounded-2xl bg-gradient-to-b from-gray-50 to-white dark:from-gray-800 dark:to-gray-900 border border-gray-200 dark:border-gray-700 p-8 shadow-card relative overflow-hidden">
+                        <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary-500 to-secondary-400"></div>
+                        <span class="absolute top-6 right-6 text-5xl text-primary-300 dark:text-primary-600 font-display opacity-30">“</span>
+                        <div class="mt-4">
+                            <p class="text-gray-700 dark:text-gray-300 text-lg font-normal leading-relaxed font-display italic">
+                                "Sema na Boychild gave me the courage to speak up and seek help. I'm now on a path to a healthier and happier life, understanding that it's okay to not be okay sometimes."
                             </p>
-<p class="text-gray-900 dark:text-white text-lg font-bold leading-normal mt-4 font-display">John Doe</p>
-</div>
-</div>
-<div class="flex h-full flex-1 flex-col gap-4 rounded-xl min-w-72 bg-background-light dark:bg-background-dark border border-gray-200 dark:border-gray-700 p-6 shadow-md relative">
-<span class="absolute top-4 left-4 text-6xl text-light-green font-display opacity-50">“</span>
-<div class="mt-8">
-<p class="text-gray-700 dark:text-gray-300 text-base font-normal leading-normal font-display">
-                                "This initiative is a beacon of hope for so many young men who feel lost and alone. It's a vital resource for our community."
+                            <div class="flex items-center mt-6">
+                                <div class="w-12 h-12 rounded-full bg-gradient-to-br from-primary-500 to-secondary-400 flex items-center justify-center text-white font-bold mr-4">
+                                    A
+                                </div>
+                                <div>
+                                    <p class="text-gray-900 dark:text-white text-lg font-bold leading-normal font-display">Anonymous</p>
+                                    <p class="text-primary-600 dark:text-primary-400 text-sm">Program Participant</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial-card flex flex-col rounded-2xl bg-gradient-to-b from-gray-50 to-white dark:from-gray-800 dark:to-gray-900 border border-gray-200 dark:border-gray-700 p-8 shadow-card relative overflow-hidden">
+                        <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary-500 to-secondary-400"></div>
+                        <span class="absolute top-6 right-6 text-5xl text-primary-300 dark:text-primary-600 font-display opacity-30">“</span>
+                        <div class="mt-4">
+                            <p class="text-gray-700 dark:text-gray-300 text-lg font-normal leading-relaxed font-display italic">
+                                "This initiative is a beacon of hope for so many young men who feel lost and unheard. A vital resource for our community that addresses issues we've ignored for too long."
                             </p>
-<p class="text-gray-900 dark:text-white text-lg font-bold leading-normal mt-4 font-display">Jane Smith</p>
-</div>
-</div>
-<div class="flex h-full flex-1 flex-col gap-4 rounded-xl min-w-72 bg-background-light dark:bg-background-dark border border-gray-200 dark:border-gray-700 p-6 shadow-md relative">
-<span class="absolute top-4 left-4 text-6xl text-light-green font-display opacity-50">“</span>
-<div class="mt-8">
-<p class="text-gray-700 dark:text-gray-300 text-base font-normal leading-normal font-display">
-                                "I'm grateful for the support and guidance I've received from Sema na Boychild. It's made a huge difference in my life."
+                            <div class="flex items-center mt-6">
+                                <div class="w-12 h-12 rounded-full bg-gradient-to-br from-primary-500 to-secondary-400 flex items-center justify-center text-white font-bold mr-4">
+                                    C
+                                </div>
+                                <div>
+                                    <p class="text-gray-900 dark:text-white text-lg font-bold leading-normal font-display">Community Leader</p>
+                                    <p class="text-primary-600 dark:text-primary-400 text-sm">Local Government</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial-card flex flex-col rounded-2xl bg-gradient-to-b from-gray-50 to-white dark:from-gray-800 dark:to-gray-900 border border-gray-200 dark:border-gray-700 p-8 shadow-card relative overflow-hidden">
+                        <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary-500 to-secondary-400"></div>
+                        <span class="absolute top-6 right-6 text-5xl text-primary-300 dark:text-primary-600 font-display opacity-30">“</span>
+                        <div class="mt-4">
+                            <p class="text-gray-700 dark:text-gray-300 text-lg font-normal leading-relaxed font-display italic">
+                                "I'm grateful for the support and guidance I've received. The mentorship program helped me navigate challenges I didn't know how to handle alone. It's made a huge difference in my life."
                             </p>
-<p class="text-gray-900 dark:text-white text-lg font-bold leading-normal mt-4 font-display">David Chen</p>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="@container bg-light-green/30 dark:bg-light-green/10">
-<div class="flex flex-col justify-end gap-6 px-4 py-10 @[480px]:gap-8 @[480px]:px-10 @[480px]:py-20">
-<div class="flex flex-col gap-2 text-center">
-<h1 class="text-gray-900 dark:text-white tracking-light text-4xl font-black leading-tight @[480px]:text-5xl @[480px]:font-black @[480px]:leading-tight @[480px]:tracking-[-0.033em] max-w-3xl mx-auto font-display">
+                            <div class="flex items-center mt-6">
+                                <div class="w-12 h-12 rounded-full bg-gradient-to-br from-primary-500 to-secondary-400 flex items-center justify-center text-white font-bold mr-4">
+                                    M
+                                </div>
+                                <div>
+                                    <p class="text-gray-900 dark:text-white text-lg font-bold leading-normal font-display">Mentee</p>
+                                    <p class="text-primary-600 dark:text-primary-400 text-sm">Year-Long Program</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Partner Section with Enhanced Layout -->
+        <section id="partner" class="py-16 px-4 bg-gray-50 dark:bg-gray-800/50">
+            <div class="max-w-5xl mx-auto">
+                <div class="text-center mb-12">
+                    <h2 class="text-4xl font-black text-gray-900 dark:text-white mb-4 font-display tracking-tight">Partner With Us</h2>
+                    <div class="h-1 w-20 bg-gradient-to-r from-primary-500 to-secondary-400 mx-auto rounded-full mb-6"></div>
+                    <p class="text-gray-700 dark:text-gray-300 text-lg max-w-2xl mx-auto">We offer competitive rates for our top-notch facilitation and enriching materials. Let's work together to create positive change in the lives of young men. </p>
+                </div>
+                
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="rounded-2xl bg-white dark:bg-gray-800 p-8 border border-gray-200 dark:border-gray-700 shadow-card">
+                        <div class="flex items-center mb-6">
+                            <div class="flex items-center justify-center w-12 h-12 rounded-full bg-primary-100 dark:bg-primary-900/40 text-primary-600 dark:text-primary-400 mr-4">
+                                <span class="material-symbols-outlined text-2xl">payments</span>
+                            </div>
+                            <h4 class="font-black text-2xl text-primary-600 dark:text-primary-400">Program Rates </h4>
+                        </div>
+                        <ul class="space-y-4 text-gray-700 dark:text-gray-300">
+                            <li class="flex justify-between items-center pb-3 border-b border-gray-100 dark:border-gray-700">
+                                <span>Daily rate per program</span>
+                                <span class="font-bold text-primary-600 dark:text-primary-400">Ksh 20,000</span>
+                            </li>
+                            <li class="flex justify-between items-center pb-3 border-b border-gray-100 dark:border-gray-700">
+                                <span>Combined programs</span>
+                                <span class="font-bold text-primary-600 dark:text-primary-400">Ksh 30,000 per day</span>
+                            </li>
+                            <li class="flex justify-between items-center">
+                                <span>3-day all-inclusive program</span>
+                                <span class="font-bold text-primary-600 dark:text-primary-400">Ksh 90,000</span>
+                            </li>
+                        </ul>
+                         <p class="text-sm mt-6 p-4 bg-primary-50 dark:bg-primary-900/20 rounded-lg text-gray-700 dark:text-gray-300 border border-primary-100 dark:border-primary-800">Please note: Additional costs like venue, accommodation, refreshments, and transport are handled by you, the client. </p>
+                    </div>
+                     <div class="rounded-2xl bg-white dark:bg-gray-800 p-8 border border-gray-200 dark:border-gray-700 shadow-card">
+                        <div class="flex items-center mb-6">
+                            <div class="flex items-center justify-center w-12 h-12 rounded-full bg-primary-100 dark:bg-primary-900/40 text-primary-600 dark:text-primary-400 mr-4">
+                                <span class="material-symbols-outlined text-2xl">account_balance</span>
+                            </div>
+                            <h4 class="font-black text-2xl text-primary-600 dark:text-primary-400">Payment Details </h4>
+                        </div>
+                        <p class="text-gray-700 dark:text-gray-300 mb-6">Payment shall be made via Bank transfer to the details below: </p>
+                        <div class="space-y-4 text-gray-700 dark:text-gray-300">
+                            <div class="flex justify-between items-center pb-3 border-b border-gray-100 dark:border-gray-700">
+                                <span class="font-medium">Bank Name</span>
+                                <span>COOPERATIVE BANK </span>
+                            </div>
+                            <div class="flex justify-between items-center pb-3 border-b border-gray-100 dark:border-gray-700">
+                                <span class="font-medium">Account Name</span>
+                                <span>SEMA NA BOYCHILD </span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="font-medium">Account Number</span>
+                                <span class="font-mono">01101972977001 </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+             </div>
+        </section>
+
+        <!-- Final CTA Section -->
+        <section id="involved" class="@container bg-gradient-to-br from-primary-600 to-secondary-500 py-16">
+            <div class="flex flex-col justify-center gap-8 px-4 py-10 @[480px]:gap-10 @[480px]:px-10 @[480px]:py-16 text-center">
+                <div class="flex flex-col gap-6 max-w-3xl mx-auto">
+                    <h1 class="text-white tracking-tight text-4xl font-black leading-tight @[480px]:text-5xl @[480px]:font-black @[480px]:leading-tight max-w-3xl mx-auto font-display">
                         Be the Change. Make a Difference.
                     </h1>
-<p class="text-gray-700 dark:text-gray-300 text-lg font-normal leading-normal max-w-3xl mx-auto font-display">Your support can help us reach more boys and create a world where they can thrive.</p>
-</div>
-<div class="flex flex-1 justify-center">
-<div class="flex justify-center">
-<div class="flex flex-1 gap-3 flex-wrap max-w-lg justify-center">
-<button class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-5 bg-primary text-white text-base font-bold leading-normal tracking-[0.015em] grow transition-colors hover:bg-primary/90 font-display">
-<span class="truncate">Get Involved</span>
-</button>
-<button class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-5 bg-transparent border-2 border-secondary text-secondary text-base font-bold leading-normal tracking-[0.015em] grow transition-colors hover:bg-secondary hover:text-white font-display">
-<span class="truncate">Share the Message</span>
-</button>
-<button class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-5 bg-transparent border-2 border-secondary text-secondary text-base font-bold leading-normal tracking-[0.015em] grow transition-colors hover:bg-secondary hover:text-white font-display">
-<span class="truncate">Find Support</span>
-</button>
-</div>
-</div>
-</div>
-</div>
-</div>
-<footer class="bg-background-light dark:bg-background-dark p-8 text-center text-gray-700 dark:text-gray-300">
-<div class="flex justify-center space-x-6 mb-4">
-<a class="hover:text-primary dark:hover:text-secondary" href="#">
-<svg aria-hidden="true" class="w-6 h-6" fill="currentColor" viewbox="0 0 24 24"><path clip-rule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" fill-rule="evenodd"></path></svg>
-</a>
-<a class="hover:text-primary dark:hover:text-secondary" href="#">
-<svg aria-hidden="true" class="w-6 h-6" fill="currentColor" viewbox="0 0 24 24"><path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.71v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84"></path></svg>
-</a>
-<a class="hover:text-primary dark:hover:text-secondary" href="#">
-<svg aria-hidden="true" class="w-6 h-6" fill="currentColor" viewbox="0 0 24 24"><path clip-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm4.927 8.164c.01.144.016.29.016.437 0 4.47-3.405 9.63-9.63 9.63-1.912 0-3.69-.56-5.183-1.518a6.837 6.837 0 005.04-1.417 3.405 3.405 0 01-3.18-2.362c.636.122 1.293.098 1.912-.073a3.402 3.402 0 01-2.727-3.34V11.53c.49.272 1.05.436 1.64.452a3.402 3.402 0 01-1.623-2.823c0-.623.167-1.206.465-1.72a9.66 9.66 0 006.994 3.546 3.404 3.404 0 013.277-4.643 3.38 3.38 0 012.553 1.105 6.81 6.81 0 002.164-.827 3.413 3.413 0 01-1.498 1.884 6.786 6.786 0 001.96-.528 7.073 7.073 0 01-1.7 1.748z" fill-rule="evenodd"></path></svg>
-</a>
-</div>
-<p class="font-display">© 2024 Sema na Boychild. All rights reserved.</p>
-</footer>
-</div>
-</body></html>
+                    <p class="text-white/90 text-xl font-normal leading-normal max-w-2xl mx-auto font-display">Your support can help us reach more boys and create a world where they can thrive emotionally, academically, and socially.</p>
+                </div>
+                <div class="flex flex-1 justify-center">
+                    <div class="flex justify-center">
+                        <div class="flex flex-col sm:flex-row gap-4 max-w-lg justify-center">
+                            <a href="#partner" class="flex min-w-[180px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-14 px-8 bg-white text-primary-700 text-lg font-bold leading-normal tracking-wide shadow-lg transition-all duration-300 hover:bg-gray-100 hover:shadow-xl cta-button">
+                                <span class="truncate">Partner With Us</span>
+                            </a>
+                            <a href="mailto:semanaboychild@gmail.com" class="flex min-w-[180px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-14 px-8 bg-transparent border-2 border-white text-white text-lg font-bold leading-normal tracking-wide transition-all duration-300 hover:bg-white/10 hover:shadow-lg cta-button">
+                                <span class="truncate">Contact Us Via Email</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Enhanced Footer -->
+        <footer id="contact" class="bg-gray-900 text-gray-300 py-12 px-4">
+            <div class="max-w-6xl mx-auto">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <div class="lg:col-span-2">
+                        <a href="#" class="flex items-center space-x-2 mb-6">
+                            <div class="w-10 h-10 rounded-full bg-gradient-to-br from-primary-600 to-secondary-500 flex items-center justify-center">
+                                <span class="text-white font-bold text-lg">S</span>
+                            </div>
+                            <span class="text-2xl font-black text-white tracking-tight">semanaboychild.org</span>
+                        </a>
+                        <p class="mb-6 max-w-md">Sema Na Boychild is dedicated to addressing the unique challenges facing young men through mentorship, education, and community support programs.</p>
+                        <div class="flex space-x-4">
+                            <a class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-primary-600 transition-colors" href="#">
+                                <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewbox="0 0 24 24"><path clip-rule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2-54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" fill-rule="evenodd"></path></svg>
+                            </a>
+                            <a class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-primary-600 transition-colors" href="#">
+                                <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewbox="0 0 24 24"><path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.71v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84"></path></svg>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h4 class="text-white font-bold text-lg mb-4">Contact Information</h4>
+                        <div class="space-y-3">
+                            <div class="flex items-start"><span class="material-symbols-outlined text-primary-400 mr-2 mt-1 text-lg">person</span><span>Polet Atieno </span></div>
+                            <div class="flex items-start"><span class="material-symbols-outlined text-primary-400 mr-2 mt-1 text-lg">mail</span><span>semanaboychild@gmail.com </span></div>
+                            <div class="flex items-start"><span class="material-symbols-outlined text-primary-400 mr-2 mt-1 text-lg">call</span><span>+254701179420 / +254701817593 </span></div>
+                            <div class="flex items-start"><span class="material-symbols-outlined text-primary-400 mr-2 mt-1 text-lg">location_on</span><span>Kisumu Busia Highway, Maseno Plaza, Kisumu </span></div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h4 class="text-white font-bold text-lg mb-4">Quick Links</h4>
+                        <ul class="space-y-2">
+                            <li><a href="#programs" class="hover:text-primary-400 transition-colors">Our Programs</a></li>
+                            <li><a href="#stats" class="hover:text-primary-400 transition-colors">The Challenge</a></li>
+                            <li><a href="#partner" class="hover:text-primary-400 transition-colors">Partner With Us</a></li>
+                            <li><a href="#involved" class="hover:text-primary-400 transition-colors">Get Involved</a></li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="section-divider my-8"></div>
+                
+                <div class="flex flex-col md:flex-row justify-between items-center">
+                    <p class="font-display">© 2025 Sema na Boychild. All rights reserved.</p>
+                    <p class="mt-2 md:mt-0">Empowering Boys, Building Better Men</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+</body>
+
+</html>
