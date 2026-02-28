@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sema Na Boychild</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            forest: "#1B4332",
+            clay: "#C1662D",
+            gold: "#D4A373",
+            sand: "#F1EFEA"
+          },
+          fontFamily: {
+            serif: ['"DM Serif Display"', 'serif'],
+            sans: ['Inter', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+  </style>
+</head>
+
+<body class="bg-sand text-gray-800 font-sans">
+
+  <!-- NAVBAR -->
+  <header class="fixed top-0 left-0 w-full bg-forest text-white shadow-md z-50">
+    <div class="max-w-6xl mx-auto flex justify-between items-center px-6 py-4">
+      
+      <!-- Logo -->
+      <div class="font-serif text-2xl">
+        Sema Na Boychild
+      </div>
+
+      <!-- Desktop Nav -->
+      <nav class="hidden md:flex gap-8 font-medium">
+        <a href="#programs" class="hover:text-gold transition">Programs</a>
+        <a href="#donate" class="hover:text-gold transition">Donate</a>
+        <a href="#impact" class="hover:text-gold transition">Impact</a>
+        <a href="#" class="hover:text-gold transition">Contact</a>
+      </nav>
+
+      <!-- Mobile Button -->
+      <button id="menu-btn" class="md:hidden focus:outline-none">
+        ☰
+      </button>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="hidden md:hidden bg-forest px-6 pb-4 space-y-4">
+      <a href="#programs" class="block">Programs</a>
+      <a href="#donate" class="block">Donate</a>
+      <a href="#impact" class="block">Impact</a>
+      <a href="#" class="block">Contact</a>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="bg-forest text-white py-32 px-6">
+    <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+      
+      <div>
+        <h1 class="font-serif text-5xl md:text-6xl leading-tight mb-6">
+          Healing the Boy. <br/> Strengthening the Nation.
+        </h1>
+
+        <p class="text-lg text-gray-200 mb-8 max-w-xl">
+          Mentorship, leadership training, and emotional support for boys across Kenya.
+          Because when boys thrive, communities rise.
+        </p>
+
+        <div class="flex gap-4">
+          <a href="#donate" class="bg-clay px-8 py-4 rounded-full font-semibold hover:opacity-90 transition">
+            Donate Now
+          </a>
+          <a href="#programs" class="border border-white px-8 py-4 rounded-full hover:bg-white hover:text-forest transition">
+            Our Programs
+          </a>
+        </div>
+      </div>
+
+      <div>
+        <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac"
+             class="rounded-xl shadow-xl"
+             alt="Mentorship session">
+      </div>
+
+    </div>
+  </section>
+
+  <!-- WHY IT MATTERS -->
+  <section class="py-20 px-6">
+    <div class="max-w-5xl mx-auto text-center">
+      <h2 class="font-serif text-4xl mb-8 text-forest">
+        Why This Matters
+      </h2>
+      <p class="text-lg max-w-3xl mx-auto text-gray-700 leading-relaxed">
+        Across Kenya and East Africa, many boys grow up navigating pressure,
+        silence, and limited guidance. Without mentorship and safe spaces,
+        potential turns into frustration.
+      </p>
+    </div>
+  </section>
+
+  <!-- PROGRAMS -->
+  <section id="programs" class="bg-white py-20 px-6">
+    <div class="max-w-6xl mx-auto">
+      <h2 class="font-serif text-4xl text-center mb-14 text-forest">
+        Our Mentorship Journey
+      </h2>
+
+      <div class="grid md:grid-cols-3 gap-10">
+        <div class="p-8 shadow-md rounded-xl">
+          <h3 class="text-2xl font-semibold mb-4 text-clay">
+            Emotional Development
+          </h3>
+          <p>Safe discussions around mental health and masculinity.</p>
+        </div>
+
+        <div class="p-8 shadow-md rounded-xl border-t-4 border-gold">
+          <h3 class="text-2xl font-semibold mb-4 text-clay">
+            Leadership Training
+          </h3>
+          <p>Practical sessions on responsibility and integrity.</p>
+        </div>
+
+        <div class="p-8 shadow-md rounded-xl">
+          <h3 class="text-2xl font-semibold mb-4 text-clay">
+            Career & Purpose
+          </h3>
+          <p>Exposure to mentors, career pathways, and skill growth.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- IMPACT -->
+  <section id="impact" class="bg-sand py-20 px-6">
+    <div class="max-w-5xl mx-auto text-center">
+      <h2 class="font-serif text-4xl text-forest mb-12">
+        Our Growing Impact
+      </h2>
+
+      <div class="grid md:grid-cols-3 gap-10 text-forest">
+        <div>
+          <p class="text-5xl font-bold">300+</p>
+          <p>Boys Mentored</p>
+        </div>
+        <div>
+          <p class="text-5xl font-bold">12</p>
+          <p>Schools Partnered</p>
+        </div>
+        <div>
+          <p class="text-5xl font-bold">5</p>
+          <p>Communities Reached</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DONATE -->
+  <section id="donate" class="bg-forest text-white py-24 px-6">
+    <div class="max-w-5xl mx-auto text-center">
+      <h2 class="font-serif text-4xl mb-6">
+        Invest in a Boy. Transform a Community.
+      </h2>
+
+      <p class="text-gray-200 mb-12 max-w-2xl mx-auto">
+        Your contribution supports mentorship sessions and leadership workshops.
+      </p>
+
+      <a href="#"
+         class="bg-clay px-10 py-4 rounded-full font-bold hover:opacity-90 transition">
+        Donate Now
+      </a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="bg-forest text-gray-300 text-center py-8">
+    <p>© 2026 Sema Na Boychild | All Rights Reserved</p>
+  </footer>
+
+  <!-- Mobile Menu Script -->
+  <script>
+    const btn = document.getElementById('menu-btn');
+    const menu = document.getElementById('mobile-menu');
+
+    btn.addEventListener('click', () => {
+      menu.classList.toggle('hidden');
+    });
+  </script>
+
+</body>
+</html>
