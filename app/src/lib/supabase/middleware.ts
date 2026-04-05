@@ -12,6 +12,16 @@ export async function updateSession(request: NextRequest) {
     return supabaseResponse;
   }
 
+  // Public routes that don't require auth
+  const publicRoutes = ["/", "/login", "/api/payments/mpesa/callback", "/api/payments/stripe/webhook", "/api/contact"];
+  const isPublicRoute = publicRoutes.some(
+    (route) => request.nextUrl.pathname === route || request.nextUrl.pathname.startsWith("/api/")
+  );
+
+  if (isPublicRoute || request.nextUrl.pathname.startsWith("/_next")) {
+    return supabaseResponse;
+  }
+
   const supabase = createServerClient(
     supabaseUrl,
     supabaseKey,
@@ -33,17 +43,19 @@ export async function updateSession(request: NextRequest) {
     }
   );
 
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  try {
+    const { data: { user } } = await supabase.auth.getUser();
 
-  // Public routes that don't require auth
-  const publicRoutes = ["/", "/login", "/api/payments/mpesa/callback", "/api/payments/stripe/webhook", "/api/contact"];
-  const isPublicRoute = publicRoutes.some(
-    (route) => request.nextUrl.pathname === route || request.nextUrl.pathname.startsWith("/api/payments/")
-  );
-
-  if (!user && !isPublicRoute && !request.nextUrl.pathname.startsWith("/_next")) {
+    if (!user) {
+      const url = request.nextUrl.clone();
+      url.pathname = "/login";
+      return NextResponse.redirect(url);
+    }
+  } catch {
+    // If auth check fails (e.g. timeout), allow through in dev
+    if (process.env.NODE_ENV === "development") {
+      return supabaseResponse;
+    }
     const url = request.nextUrl.clone();
     url.pathname = "/login";
     return NextResponse.redirect(url);

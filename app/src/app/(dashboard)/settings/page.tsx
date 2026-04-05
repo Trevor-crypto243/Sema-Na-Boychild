@@ -206,10 +206,22 @@ export default function SettingsPage() {
                 <CardDescription>Connect your social media for auto-posting</CardDescription>
               </CardHeader>
               <CardContent className="space-y-3">
-                {["Instagram", "TikTok", "YouTube", "Facebook", "Twitter/X"].map(platform => (
-                  <div key={platform} className="flex items-center justify-between rounded-lg border p-3">
-                    <span className="font-medium">{platform}</span>
-                    <Button variant="outline" size="sm">Connect</Button>
+                {[
+                  { label: "Instagram", id: "instagram" },
+                  { label: "TikTok", id: "tiktok" },
+                  { label: "YouTube", id: "youtube" },
+                  { label: "Facebook", id: "facebook" },
+                  { label: "Twitter/X", id: "twitter" },
+                ].map(platform => (
+                  <div key={platform.id} className="flex items-center justify-between rounded-lg border p-3">
+                    <span className="font-medium">{platform.label}</span>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => window.location.href = `/api/social-accounts/connect/${platform.id}`}
+                    >
+                      Connect
+                    </Button>
                   </div>
                 ))}
               </CardContent>

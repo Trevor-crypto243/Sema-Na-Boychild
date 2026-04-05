@@ -23,7 +23,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={cn("font-sans antialiased", inter.variable)}>
+    <html lang="en" className={cn("font-sans antialiased scroll-smooth", inter.variable)}>
       <body>
         {children}
         <Toaster />

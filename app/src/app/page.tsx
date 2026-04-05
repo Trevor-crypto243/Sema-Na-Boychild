@@ -1,9 +1,12 @@
 import Link from "next/link";
 import { Heart, Users, School, Calendar, BookOpen, Shield, Star, Mail, Phone, MapPin } from "lucide-react";
+import { DonateSection } from "@/components/landing/donate-section";
+import { ScrollAnimate } from "@/components/landing/scroll-animate";
+import { CounterAnimate } from "@/components/landing/counter-animate";
 
 export default function LandingPage() {
   return (
-    <div className="min-h-screen bg-[#F1EFEA]">
+    <div className="min-h-screen bg-[#F1EFEA] scroll-smooth">
       {/* Navigation */}
       <nav className="sticky top-0 z-50 border-b bg-white/95 backdrop-blur">
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
@@ -60,16 +63,20 @@ export default function LandingPage() {
         <div className="mx-auto max-w-6xl px-6">
           <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
             {[
-              { value: "300+", label: "Boys Mentored", icon: Users },
-              { value: "12", label: "Schools Partnered", icon: School },
-              { value: "5", label: "Communities Reached", icon: MapPin },
-              { value: "25+", label: "Events Held", icon: Calendar },
-            ].map((stat) => (
-              <div key={stat.label} className="text-center">
-                <stat.icon className="mx-auto h-8 w-8 text-[#C1662D]" />
-                <div className="mt-3 text-3xl font-bold text-[#1B4332]">{stat.value}</div>
-                <div className="mt-1 text-sm text-muted-foreground">{stat.label}</div>
-              </div>
+              { value: 300, suffix: "+", label: "Boys Mentored", icon: Users },
+              { value: 12, suffix: "", label: "Schools Partnered", icon: School },
+              { value: 5, suffix: "", label: "Communities Reached", icon: MapPin },
+              { value: 25, suffix: "+", label: "Events Held", icon: Calendar },
+            ].map((stat, i) => (
+              <ScrollAnimate key={stat.label} animation="fade-up" delay={i * 150}>
+                <div className="text-center">
+                  <stat.icon className="mx-auto h-8 w-8 text-[#C1662D]" />
+                  <div className="mt-3 text-3xl font-bold text-[#1B4332]">
+                    <CounterAnimate target={stat.value} suffix={stat.suffix} />
+                  </div>
+                  <div className="mt-1 text-sm text-muted-foreground">{stat.label}</div>
+                </div>
+              </ScrollAnimate>
             ))}
           </div>
         </div>
@@ -102,14 +109,16 @@ export default function LandingPage() {
                 desc: "Boys who go through our program show improved academic performance, better emotional regulation, and stronger leadership skills.",
                 icon: Star,
               },
-            ].map((item) => (
-              <div key={item.title} className="rounded-2xl bg-white p-8 shadow-sm">
-                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#1B4332]/10">
-                  <item.icon className="h-6 w-6 text-[#1B4332]" />
+            ].map((item, i) => (
+              <ScrollAnimate key={item.title} animation="fade-up" delay={i * 200}>
+                <div className="rounded-2xl bg-white p-8 shadow-sm hover:shadow-lg transition-shadow duration-300">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#1B4332]/10">
+                    <item.icon className="h-6 w-6 text-[#1B4332]" />
+                  </div>
+                  <h3 className="mt-4 text-xl font-bold text-[#1B4332]">{item.title}</h3>
+                  <p className="mt-2 text-gray-600">{item.desc}</p>
                 </div>
-                <h3 className="mt-4 text-xl font-bold text-[#1B4332]">{item.title}</h3>
-                <p className="mt-2 text-gray-600">{item.desc}</p>
-              </div>
+              </ScrollAnimate>
             ))}
           </div>
         </div>
@@ -142,14 +151,16 @@ export default function LandingPage() {
                 icon: BookOpen,
                 color: "bg-[#D4A373]",
               },
-            ].map((program) => (
-              <div key={program.title} className="group rounded-2xl border p-8 transition-all hover:shadow-lg">
-                <div className={`flex h-14 w-14 items-center justify-center rounded-xl ${program.color}`}>
-                  <program.icon className="h-7 w-7 text-white" />
+            ].map((program, i) => (
+              <ScrollAnimate key={program.title} animation="scale" delay={i * 150}>
+                <div className="group rounded-2xl border p-8 transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
+                  <div className={`flex h-14 w-14 items-center justify-center rounded-xl ${program.color} transition-transform duration-300 group-hover:scale-110`}>
+                    <program.icon className="h-7 w-7 text-white" />
+                  </div>
+                  <h3 className="mt-6 text-xl font-bold text-[#1B4332]">{program.title}</h3>
+                  <p className="mt-3 text-gray-600">{program.desc}</p>
                 </div>
-                <h3 className="mt-6 text-xl font-bold text-[#1B4332]">{program.title}</h3>
-                <p className="mt-3 text-gray-600">{program.desc}</p>
-              </div>
+              </ScrollAnimate>
             ))}
           </div>
         </div>
@@ -164,8 +175,9 @@ export default function LandingPage() {
               { name: "James Ochieng", role: "Mentor", quote: "Watching these boys transform from shy, uncertain teenagers into confident young men with clear goals has been the most rewarding experience of my life." },
               { name: "Mary Wanjiku", role: "Parent", quote: "My son was struggling in school and at home. Since joining the program, he has become more focused, respectful, and driven. I cannot thank Sema Na Boychild enough." },
               { name: "Brian Kiprop", role: "Mentee", quote: "Before the program, I did not believe in myself. My mentor showed me that I have potential and helped me set goals for the first time in my life." },
-            ].map((t) => (
-              <div key={t.name} className="rounded-2xl bg-white p-8 shadow-sm">
+            ].map((t, i) => (
+              <ScrollAnimate key={t.name} animation="fade-up" delay={i * 200}>
+              <div className="rounded-2xl bg-white p-8 shadow-sm hover:shadow-md transition-shadow duration-300">
                 <div className="flex gap-1">
                   {[...Array(5)].map((_, i) => (
                     <Star key={i} className="h-4 w-4 fill-[#D4A373] text-[#D4A373]" />
@@ -177,39 +189,14 @@ export default function LandingPage() {
                   <p className="text-sm text-muted-foreground">{t.role}</p>
                 </div>
               </div>
+              </ScrollAnimate>
             ))}
           </div>
         </div>
       </section>
 
       {/* Donate Section */}
-      <section id="donate" className="bg-[#1B4332] py-20 text-white">
-        <div className="mx-auto max-w-6xl px-6 text-center">
-          <h2 className="text-3xl font-bold">Support the Boy-Child</h2>
-          <p className="mx-auto mt-4 max-w-xl text-white/80">
-            Your donation directly funds school visits, seminars, mentorship materials, and programs
-            that transform young lives. Every shilling counts.
-          </p>
-          <div className="mx-auto mt-8 flex max-w-lg flex-wrap justify-center gap-3">
-            {["500", "1,000", "2,500", "5,000"].map((amt) => (
-              <button key={amt} className="rounded-lg border border-white/30 px-6 py-3 font-medium hover:bg-white/10 transition-colors">
-                KES {amt}
-              </button>
-            ))}
-            <button className="rounded-lg border border-white/30 px-6 py-3 font-medium hover:bg-white/10 transition-colors">
-              Custom
-            </button>
-          </div>
-          <div className="mx-auto mt-8 flex max-w-sm flex-col gap-3">
-            <button className="rounded-lg bg-[#4CAF50] px-6 py-3 font-medium text-white hover:bg-[#4CAF50]/90">
-              Donate via M-Pesa
-            </button>
-            <button className="rounded-lg bg-[#635BFF] px-6 py-3 font-medium text-white hover:bg-[#635BFF]/90">
-              Donate via Card (International)
-            </button>
-          </div>
-        </div>
-      </section>
+      <DonateSection />
 
       {/* Contact Section */}
       <section id="contact" className="bg-white py-20">
