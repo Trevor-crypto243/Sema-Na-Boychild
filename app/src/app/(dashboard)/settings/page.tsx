@@ -17,16 +17,19 @@ export default function SettingsPage() {
   const [users, setUsers] = useState<any[]>([]);
   const [orgData, setOrgData] = useState({ name: "", address: "", phone: "", email: "" });
   const [inviteOpen, setInviteOpen] = useState(false);
+  const [connectedAccounts, setConnectedAccounts] = useState<string[]>([]);
   const supabase = createClient();
 
   useEffect(() => { fetchData(); }, []);
 
   async function fetchData() {
-    const [usersRes, orgRes] = await Promise.all([
+    const [usersRes, orgRes, socialRes] = await Promise.all([
       supabase.from("users").select("*").order("created_at", { ascending: false }),
       supabase.from("organizations").select("*").limit(1).single(),
+      supabase.from("social_accounts").select("platform").eq("is_active", true),
     ]);
     setUsers(usersRes.data || []);
+    setConnectedAccounts((socialRes.data || []).map((a: any) => a.platform));
     if (orgRes.data) {
       setOrgData({
         name: orgRes.data.name || "",
@@ -35,6 +38,11 @@ export default function SettingsPage() {
         email: orgRes.data.email || "",
       });
     }
+  }
+
+  async function handleDisconnect(platform: string) {
+    await supabase.from("social_accounts").delete().eq("platform", platform);
+    setConnectedAccounts(prev => prev.filter(p => p !== platform));
   }
 
   async function handleSaveOrg(e: React.FormEvent) {
@@ -212,18 +220,37 @@ export default function SettingsPage() {
                   { label: "YouTube", id: "youtube" },
                   { label: "Facebook", id: "facebook" },
                   { label: "Twitter/X", id: "twitter" },
-                ].map(platform => (
-                  <div key={platform.id} className="flex items-center justify-between rounded-lg border p-3">
-                    <span className="font-medium">{platform.label}</span>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => window.location.href = `/api/social-accounts/connect/${platform.id}`}
-                    >
-                      Connect
-                    </Button>
-                  </div>
-                ))}
+                ].map(platform => {
+                  const connected = connectedAccounts.includes(platform.id);
+                  return (
+                    <div key={platform.id} className="flex items-center justify-between rounded-lg border p-3">
+                      <div className="flex items-center gap-2">
+                        <span className="font-medium">{platform.label}</span>
+                        {connected && <Badge variant="secondary" className="bg-green-100 text-green-800 text-xs">Connected</Badge>}
+                      </div>
+                      <div className="flex gap-2">
+                        {connected ? (
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            className="text-red-600 hover:bg-red-50"
+                            onClick={() => handleDisconnect(platform.id)}
+                          >
+                            Disconnect
+                          </Button>
+                        ) : (
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => window.open(`/api/social-accounts/connect/${platform.id}`, '_blank')}
+                          >
+                            Connect
+                          </Button>
+                        )}
+                      </div>
+                    </div>
+                  );
+                })}
               </CardContent>
             </Card>
           </div>

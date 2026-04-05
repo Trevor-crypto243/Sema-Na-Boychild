@@ -4,78 +4,62 @@ import { chromium } from '@playwright/test';
   const browser = await chromium.launch({ headless: false });
   const context = await browser.newContext({ viewport: { width: 1440, height: 900 } });
   const page = await context.newPage();
+  let passed = 0, failed = 0;
 
-  // 1. Landing page
-  console.log('1. Opening landing page...');
-  await page.goto('http://localhost:3000', { timeout: 15000 });
-  await page.waitForLoadState('networkidle', { timeout: 10000 }).catch(() => {});
-  await page.screenshot({ path: 'screenshots/01-landing.png', fullPage: true });
-  console.log('   ✅ Landing page loaded');
-  await page.waitForTimeout(2000);
+  async function check(label, url, ssName) {
+    try {
+      await page.goto(url, { timeout: 15000 });
+      await page.waitForLoadState('networkidle', { timeout: 10000 }).catch(() => {});
+      await page.screenshot({ path: `screenshots/${ssName}` });
+      await page.waitForTimeout(1000);
+      passed++;
+      console.log(`✅ ${label}`);
+    } catch (e) {
+      failed++;
+      console.log(`❌ ${label}: ${e.message?.substring(0, 60)}`);
+    }
+  }
 
-  // 2. Login page
-  console.log('2. Navigating to login...');
+  // Landing
+  await check('Landing Page', 'http://localhost:3000', 'z-01-landing.png');
+
+  // Login + auth
   await page.goto('http://localhost:3000/login', { timeout: 15000 });
   await page.waitForLoadState('networkidle', { timeout: 10000 }).catch(() => {});
-  await page.screenshot({ path: 'screenshots/02-login.png' });
-  console.log('   ✅ Login page loaded');
-  await page.waitForTimeout(1000);
-
-  // 3. Sign in
-  console.log('3. Signing in as admin...');
   await page.fill('input[type="email"]', 'admin@semanaboychild.org');
   await page.fill('input[type="password"]', 'admin123456');
-  await page.screenshot({ path: 'screenshots/03-login-filled.png' });
   await page.click('button[type="submit"]');
-
-  // Wait for redirect or page change
   await page.waitForTimeout(5000);
-  await page.screenshot({ path: 'screenshots/04-after-login.png' });
-  console.log('   Current URL:', page.url());
+  console.log(`✅ Login -> ${page.url()}`);
+  passed++;
 
-  // Try navigating to dashboard directly
-  console.log('4. Navigating to dashboard...');
-  await page.goto('http://localhost:3000/dashboard', { timeout: 15000 });
-  await page.waitForLoadState('networkidle', { timeout: 10000 }).catch(() => {});
-  await page.screenshot({ path: 'screenshots/05-dashboard.png' });
-  console.log('   ✅ Dashboard loaded');
-  await page.waitForTimeout(2000);
+  // All admin pages (now with data)
+  await check('Dashboard', 'http://localhost:3000/dashboard', 'z-02-dashboard.png');
+  await check('Boys', 'http://localhost:3000/boys', 'z-03-boys.png');
+  await check('Mentors', 'http://localhost:3000/mentors', 'z-04-mentors.png');
+  await check('Donations', 'http://localhost:3000/donations', 'z-05-donations.png');
+  await check('Events', 'http://localhost:3000/events', 'z-06-events.png');
+  await check('Content', 'http://localhost:3000/content', 'z-07-content.png');
+  await check('Content New', 'http://localhost:3000/content/new', 'z-08-content-new.png');
+  await check('Finance', 'http://localhost:3000/finance', 'z-09-finance.png');
+  await check('Reports', 'http://localhost:3000/reports', 'z-10-reports.png');
+  await check('Settings', 'http://localhost:3000/settings', 'z-11-settings.png');
+  await check('Campaigns', 'http://localhost:3000/donations/campaigns', 'z-12-campaigns.png');
 
-  // 5. Boys page
-  console.log('5. Navigating to Boys...');
+  // Boy detail page
   await page.goto('http://localhost:3000/boys', { timeout: 15000 });
   await page.waitForLoadState('networkidle', { timeout: 10000 }).catch(() => {});
-  await page.screenshot({ path: 'screenshots/06-boys.png' });
-  console.log('   ✅ Boys page loaded');
-  await page.waitForTimeout(1000);
+  const viewBtn = page.locator('button:has-text("View")').first();
+  if (await viewBtn.isVisible()) {
+    await viewBtn.click();
+    await page.waitForTimeout(3000);
+    await page.screenshot({ path: 'screenshots/z-13-boy-detail.png' });
+    console.log('✅ Boy Detail Page');
+    passed++;
+  }
 
-  // 6. Events page
-  console.log('6. Navigating to Events...');
-  await page.goto('http://localhost:3000/events', { timeout: 15000 });
-  await page.waitForLoadState('networkidle', { timeout: 10000 }).catch(() => {});
-  await page.screenshot({ path: 'screenshots/07-events.png' });
-  console.log('   ✅ Events page loaded');
-  await page.waitForTimeout(1000);
-
-  // 7. Content page
-  console.log('7. Navigating to Content...');
-  await page.goto('http://localhost:3000/content', { timeout: 15000 });
-  await page.waitForLoadState('networkidle', { timeout: 10000 }).catch(() => {});
-  await page.screenshot({ path: 'screenshots/08-content.png' });
-  console.log('   ✅ Content page loaded');
-  await page.waitForTimeout(1000);
-
-  // 8. Settings page
-  console.log('8. Navigating to Settings...');
-  await page.goto('http://localhost:3000/settings', { timeout: 15000 });
-  await page.waitForLoadState('networkidle', { timeout: 10000 }).catch(() => {});
-  await page.screenshot({ path: 'screenshots/09-settings.png' });
-  console.log('   ✅ Settings page loaded');
-
-  // Keep open
-  console.log('\n🌐 Browser open — explore! Closing in 60 seconds...');
-  await page.waitForTimeout(60000);
-
+  console.log(`\n━━━ FINAL: ${passed} passed, ${failed} failed ━━━`);
+  console.log('\n🌐 Browser open for 45s...');
+  await page.waitForTimeout(45000);
   await browser.close();
-  console.log('Done!');
 })();

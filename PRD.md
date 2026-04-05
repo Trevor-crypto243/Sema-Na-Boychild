@@ -660,7 +660,53 @@ The following system prompt is passed to the Claude Code orchestrator to control
 
 ---
 
-## 13. Done Items
+## 13. Additional Features (Inspired by amanmustcry.org)
+
+The following features should be added to enhance the platform, inspired by best practices from similar NGO platforms:
+
+### 13.1 Blog & Vlog Section
+- Public blog page at `/blog` with articles about mentorship, events, and impact stories
+- Vlog page at `/vlogs` embedding YouTube videos from the NGO's channel
+- Admin can create/edit blog posts from the dashboard
+- Blog posts support featured images, categories, and tags
+
+### 13.2 Gallery Page
+- Public gallery at `/gallery` showcasing photos and videos from events
+- Pulls from event_media table (photos uploaded after events)
+- Filterable by event type, date, and school
+- Lightbox view for photos
+
+### 13.3 Newsletter Subscription
+- Email collection form on landing page and footer
+- Stored in a `newsletter_subscribers` table
+- Monthly digest emails via Resend
+
+### 13.4 Team / Leadership Page
+- Public page showcasing the NGO's leadership and core mentors
+- Pulls from `team_members` table (already in schema)
+- Photo, name, title, bio, social links
+
+### 13.5 Theory of Change Section
+- Detailed section on the landing page explaining the NGO's framework
+- Visual infographic: Problem -> Intervention -> Output -> Outcome -> Impact
+
+### 13.6 Upcoming Events on Homepage
+- Preview of next 3 upcoming events on the landing page
+- Pulled from events table where date >= today
+- Links to full events page or individual event details
+
+### 13.7 Featured Videos
+- Section on homepage featuring 2-3 YouTube video embeds
+- Managed from admin (content_posts where platform includes youtube)
+
+### 13.8 Volunteer Signup
+- Form on landing page for potential mentors/volunteers
+- Captures: name, email, phone, county, expertise, availability
+- Creates a mentor record with status "pending_approval"
+
+---
+
+## 14. Done Items
 
 - [x] Domain acquired
 - [x] Landing page design (HTML/Tailwind prototype in repo)
