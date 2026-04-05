@@ -1,195 +1,348 @@
 # Sema Na Boychild - Development Progress
 
-## Phase 1 — Foundation (COMPLETED)
+## Implementation Checklist
 
-### P1-01: Initialize Next.js 14 Project ✅
-- Next.js 14 with App Router, TypeScript, Tailwind v4
-- shadcn/ui v4 (base-ui) components installed
-- Dependencies: @supabase/supabase-js, @supabase/ssr, zustand, @tanstack/react-query, react-hook-form, zod, lucide-react, framer-motion, recharts, resend
-- Project lives in `/app` directory
+### Landing Page
+- [x] Hero section with CTA buttons
+- [x] Impact numbers with animated counters
+- [x] About section (The Crisis, Our Approach, The Impact)
+- [x] Programs section (Emotional Development, Leadership, Career)
+- [x] Testimonials carousel
+- [x] Donate section with M-Pesa STK Push integration
+- [x] Contact section with form
+- [x] Footer with social links
+- [x] Smooth scrolling + scroll animations
+- [x] Responsive nav with admin link
+- [ ] Contact form client-side submission wired to API
+- [ ] Blog / News section (inspired by amanmustcry.org)
+- [ ] Vlog section — embedded YouTube videos
+- [ ] Gallery / Media showcase from events
+- [ ] Volunteer signup form
+- [ ] Newsletter subscription with email collection
+- [ ] Team / Leadership page
+- [ ] Theory of Change / Our Approach detailed section
+- [ ] Upcoming Events preview on homepage
+- [ ] Featured Videos section on homepage
+- [ ] Core Values section
 
-### P1-02: Database Schema ✅
-- Full SQL migration at `supabase/migrations/001_initial_schema.sql`
-- 23 tables covering: organizations, users, roles, activity_log, boys, schools, mentors, mentor_assignments, progress_notes, boy_documents, donations, expenses, donation_campaigns, finance_reports, events, event_attendees, event_media, event_notes, content_posts, content_post_results, social_accounts, testimonials, impact_metrics, contact_submissions
-- TypeScript types at `src/types/database.ts`
-- Indexes, triggers for updated_at, seed data included
+### Authentication & Users
+- [x] Supabase Auth login page
+- [x] Session middleware with role-based redirects
+- [x] User invite API (service role)
+- [x] Role-based access: Admin, Coordinator, Mentor
+- [x] RLS policies for all 23 tables
+- [ ] Password reset flow
+- [ ] Email verification
+- [ ] OAuth social login (Google)
 
-### P1-03: Auth Setup ✅
-- Supabase client: `src/lib/supabase/client.ts` (browser)
-- Supabase server: `src/lib/supabase/server.ts` (SSR + service role)
-- Middleware: `src/lib/supabase/middleware.ts` + `src/middleware.ts`
-- Login page: `src/app/(auth)/login/page.tsx`
-- Public routes: /, /login, payment callbacks, contact
+### Dashboard
+- [x] KPI cards (Active Boys, Mentors, Donations, Events)
+- [x] Quick actions panel
+- [x] Recent activity feed
+- [ ] Donation trend chart (Recharts)
+- [ ] School visits map
+- [ ] Campaign progress bars
 
-### P1-04: RLS Policies ✅
-- Full RLS migration at `supabase/migrations/002_rls_policies.sql`
-- Helper functions: get_user_role(), is_admin(), is_admin_or_coordinator()
-- All 23 tables have RLS enabled with role-based policies
-- Mentors can only see assigned boys
+### Boys Database
+- [x] List with search and status filter
+- [x] Add boy dialog form
+- [x] Boy detail page with profile
+- [x] Progress notes (add + view by category)
+- [x] Mentor history tab
+- [x] API routes (CRUD + notes)
+- [ ] CSV/Excel export
+- [ ] Bulk import
+- [ ] Photo upload for boy profile
 
-### P1-05: Layout ✅
-- Sidebar: `src/components/layout/app-sidebar.tsx` — 9 nav items
-- Header: `src/components/layout/header.tsx` — user avatar, dropdown
-- Dashboard layout: `src/app/(dashboard)/layout.tsx`
-- Theme colors: Forest #1B4332, Clay #C1662D, Gold #D4A373, Sand #F1EFEA
+### Mentors
+- [x] List with search
+- [x] Add mentor dialog
+- [x] Mentor detail page with assigned boys
+- [x] Mentor assignment API
+- [ ] Availability calendar
+- [ ] Activity history
 
-### P1-06: Settings Module ✅
-- `src/app/(dashboard)/settings/page.tsx`
-- Tabs: Organization Data, Users & Invitations, Integrations
-- User invite via `/api/users/invite`
-- M-Pesa & Social Media integration placeholders
+### Donations
+- [x] Donation list with filters
+- [x] Manual donation logging
+- [x] Stats cards (total, this month, campaigns)
+- [x] M-Pesa Daraja API (STK Push + callback)
+- [x] Landing page donate button with phone input
+- [x] Donation campaigns page with progress bars
+- [ ] Stripe checkout integration
+- [ ] PDF receipt generation
+- [ ] Recurring donations
+- [ ] Donor thank-you emails (Resend)
 
----
+### Events & Seminars
+- [x] Events list with type filter
+- [x] Create event dialog
+- [x] Event detail page (details, attendees, media, notes)
+- [x] Status updates (planned -> ongoing -> completed)
+- [x] Event notes
+- [ ] Calendar view (month/week)
+- [ ] Attendance marking
+- [ ] Event media upload
+- [ ] Budget vs actual tracking
 
-## Phase 2 — Landing Page & Core Data (COMPLETED)
-
-### P2-01: Landing Page ✅
-- `src/app/page.tsx` — Full public landing page
-- Sections: Hero, Impact Numbers, About, Programs, Testimonials, Donate, Contact, Footer
-- Responsive, SEO metadata configured
-
-### P2-02: Contact Form ✅
-- API route: `src/app/api/contact/route.ts`
-- Saves to contact_submissions table
-
-### P2-03: Schools (implicit in Boys module)
-- Schools CRUD referenced in Boys and Events forms
-
-### P2-04: Boys Database ✅
-- List page: `src/app/(dashboard)/boys/page.tsx` — table, search, filters, add dialog
-- Detail page: `src/app/(dashboard)/boys/[id]/page.tsx` — profile, progress notes, mentor history
-- API routes: `src/app/api/boys/route.ts`, `src/app/api/boys/[id]/route.ts`, `src/app/api/boys/[id]/notes/route.ts`
-
-### P2-05: Mentors ✅
-- List page: `src/app/(dashboard)/mentors/page.tsx`
-- Detail page: `src/app/(dashboard)/mentors/[id]/page.tsx`
-- API routes: `src/app/api/mentors/route.ts`, `src/app/api/mentors/assign/route.ts`
-
-### P2-06: Mentor-Boy Assignments ✅
-- Assignment API and display on both boy and mentor detail pages
-- Progress notes creation from boy detail page
-
----
-
-## Phase 3 — Donations & Finance (COMPLETED)
-
-### P3-01: M-Pesa Integration ✅
-- STK Push: `src/app/api/payments/mpesa/stk/route.ts`
-- Callback: `src/app/api/payments/mpesa/callback/route.ts`
-- Full Daraja API integration (sandbox + production)
-
-### P3-02: Stripe (placeholder)
-- Checkout session and webhook routes created (directory structure)
-- Needs Stripe SDK integration
-
-### P3-03: Donations Module ✅
-- `src/app/(dashboard)/donations/page.tsx` — list, filters, stats cards, manual donation logging
-- API: `src/app/api/donations/route.ts`
-
-### P3-04: Donation Campaigns ✅
-- `src/app/(dashboard)/donations/campaigns/page.tsx` — create, progress bars
-
-### P3-06: Finance Tracker ✅
-- `src/app/(dashboard)/finance/page.tsx` — income/expense/balance cards, expense logging, approval
-
----
-
-## Phase 4 — Events & Seminars (COMPLETED)
-
-### P4-01: Events Module ✅
-- `src/app/(dashboard)/events/page.tsx` — list, filters by type, create dialog
-- API: `src/app/api/events/route.ts`
-
-### P4-02: Event Detail ✅
-- `src/app/(dashboard)/events/[id]/page.tsx` — details, attendees, media, notes, budget
-- Status updates (planned → ongoing → completed)
-
----
-
-## Phase 5 — Content Management (COMPLETED)
-
-### P5-01: Content Creation ✅
-- `src/app/(dashboard)/content/new/page.tsx` — editor, platform selection, first comment, scheduling
-- API: `src/app/api/content/route.ts`
-
-### P5-03: Auto-Posting Engine ✅ (structure)
-- `src/app/api/content/[id]/publish/route.ts` — distributes to platforms
-- Platform API integrations are placeholder (TODO: connect actual APIs)
-
-### P5-04: First Comment Automation ✅ (structure)
-- `src/app/api/content/[id]/comment/route.ts` — auto-posts first comment
-
-### P5-05: Content List ✅
-- `src/app/(dashboard)/content/page.tsx` — tabs by status, platform badges
-
----
-
-## Phase 6 — Dashboard & Reports (COMPLETED)
-
-### P6-01: Dashboard ✅
-- `src/app/(dashboard)/dashboard/page.tsx` — KPI cards, quick actions, activity feed
-- API: `src/app/api/dashboard/stats/route.ts`
-
-### P6-02: Reports ✅
-- `src/app/(dashboard)/reports/page.tsx` — impact metrics overview
-
----
-
-## Build Status
-- ✅ `next build` passes successfully
-- ⚠️ Warnings only (React Hook deps — non-blocking)
-
----
-
-## TODO (Not Yet Implemented)
-- [ ] Stripe checkout integration (needs SDK)
-- [ ] Actual social media API integrations (TikTok, Instagram, YouTube, Facebook, Twitter)
-- [ ] Email notifications via Resend
-- [ ] File upload for event media, boy documents
+### Content Management & Social Media
+- [x] Create post page with rich editor
+- [x] Media file upload (photos + videos) with Supabase Storage
+- [x] Platform selection (Instagram, TikTok, YouTube, Facebook, Twitter)
+- [x] First comment field with auto-post logic
+- [x] Schedule or post immediately
+- [x] Content list with status tabs and platform badges
+- [x] **Facebook adapter** — Graph API v19, photo/video/text posts + comments
+- [x] **Instagram adapter** — Graph API, single/carousel/reels + comments
+- [x] **TikTok adapter** — Content Posting API v2, video upload + comments
+- [x] **YouTube adapter** — Data API v3, resumable video upload + comment threads
+- [x] **Twitter/X adapter** — API v2, tweet with media upload + reply comments
+- [x] **Publishing engine** — Routes to all adapters, auto-refresh tokens, first comment automation
+- [x] OAuth connect flow for all platforms (/api/social-accounts/connect/[platform])
+- [x] OAuth callback handler (/api/social-accounts/callback/[platform])
+- [x] Settings page connect buttons wired to OAuth
 - [ ] Content scheduling cron job
-- [ ] Landing page contact form client-side submission
-- [ ] Donation receipt PDF generation
+- [ ] Content calendar view
+- [ ] Media library browser
+- [ ] Post analytics (likes, shares, reach)
+- [ ] Retry failed posts
+
+### Finance Tracker
+- [x] Income/Expense/Balance overview cards
+- [x] Expense logging with categories
+- [x] Expense approval workflow (Admin approves)
+- [ ] Financial reports (monthly/quarterly PDF)
+- [ ] Receipt upload for expenses
+- [ ] Budget allocation per event
+
+### Reports & Impact
+- [x] Aggregate impact stats page
+- [ ] Charts (Recharts integration)
+- [ ] Exportable PDF reports
+- [ ] Custom date range filtering
+- [ ] County-level school visits map
+
+### Settings
+- [x] Organization data management
+- [x] User list and invite system
+- [x] Social media account connections (OAuth)
+- [x] Payment integration config display
+- [ ] Role permissions matrix editor
+- [ ] Landing page CMS (edit sections from admin)
+- [ ] Email template management
+
+### UI/UX
+- [x] Forest green (#1B4332) theme throughout
+- [x] Sidebar navigation with active states
+- [x] Header with user avatar and dropdown
+- [x] Scroll-triggered animations on landing page
+- [x] Animated impact counters
+- [x] Smooth scrolling
+- [x] Hover effects on cards and buttons
+- [x] shadcn/ui v4 component library
+- [ ] Dark mode toggle
 - [ ] Mobile responsive testing
-- [ ] E2E tests with Playwright
-- [ ] Deployment config (Vercel + Supabase)
-- [ ] Connect Supabase project (update .env.local with real keys)
+- [ ] Loading skeletons
+- [ ] Toast notifications on actions
+
+### Infrastructure
+- [x] Next.js 14 (App Router)
+- [x] Supabase local (Docker) setup
+- [x] Database migrations (3 files)
+- [x] RLS policies
+- [x] Storage bucket for media
+- [x] TypeScript types for all tables
+- [x] Environment variables template
+- [ ] Vercel deployment config
+- [ ] Supabase production setup
+- [ ] CI/CD pipeline
+- [ ] E2E tests (Playwright)
+
+---
+
+## Social Media Platform Setup Guide
+
+To enable auto-posting, you need developer accounts on each platform:
+
+### Facebook & Instagram
+1. Go to https://developers.facebook.com
+2. Create an App (Business type)
+3. Add Facebook Login and Instagram Graph API products
+4. Set redirect URI: `{APP_URL}/api/social-accounts/callback/facebook`
+5. Get App ID and App Secret -> set `FACEBOOK_APP_ID` and `FACEBOOK_APP_SECRET`
+6. For Instagram: Link an Instagram Business account to a Facebook Page
+
+### TikTok
+1. Go to https://developers.tiktok.com
+2. Create an App
+3. Enable Content Posting API and Login Kit
+4. Set redirect URI: `{APP_URL}/api/social-accounts/callback/tiktok`
+5. Get Client Key and Secret -> set `TIKTOK_CLIENT_KEY` and `TIKTOK_CLIENT_SECRET`
+
+### YouTube (Google)
+1. Go to https://console.cloud.google.com
+2. Create a project and enable YouTube Data API v3
+3. Create OAuth 2.0 credentials (Web application)
+4. Set redirect URI: `{APP_URL}/api/social-accounts/callback/youtube`
+5. Get Client ID and Secret -> set `GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET`
+
+### Twitter / X
+1. Go to https://developer.twitter.com
+2. Create a Project and App (OAuth 2.0)
+3. Enable tweet.read, tweet.write, users.read, offline.access scopes
+4. Set redirect URI: `{APP_URL}/api/social-accounts/callback/twitter`
+5. Get Client ID and Secret -> set `TWITTER_CLIENT_ID` and `TWITTER_CLIENT_SECRET`
+
+---
+
+## Android APK Generation Guide
+
+The Sema Na Boychild web app can be packaged as an Android APK using multiple approaches:
+
+### Option 1: TWA (Trusted Web Activity) — Recommended
+
+TWA wraps your deployed web app in a native Android shell using Chrome Custom Tabs. No code changes needed.
+
+**Prerequisites:**
+- Web app deployed to HTTPS (e.g. Vercel)
+- Android Studio installed
+- Java JDK 11+
+
+**Steps:**
+1. **Install Bubblewrap CLI:**
+   ```bash
+   npm install -g @anthropic-ai/bubblewrap
+   # or
+   npm install -g @nicolo-ribaudo/bubblewrap
+   ```
+
+2. **Initialize TWA project:**
+   ```bash
+   mkdir sema-android && cd sema-android
+   bubblewrap init --manifest https://your-deployed-url.vercel.app/manifest.json
+   ```
+
+3. **Add Web App Manifest** (create `app/public/manifest.json`):
+   ```json
+   {
+     "name": "Sema Na Boychild",
+     "short_name": "SemaNaBoychild",
+     "start_url": "/",
+     "display": "standalone",
+     "background_color": "#1B4332",
+     "theme_color": "#1B4332",
+     "icons": [
+       { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png" },
+       { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png" }
+     ]
+   }
+   ```
+
+4. **Build APK:**
+   ```bash
+   bubblewrap build
+   ```
+
+5. **Output:** `app-release-signed.apk` ready for Play Store or sideloading
+
+### Option 2: Capacitor (Hybrid App)
+
+Capacitor wraps the Next.js app with native Android/iOS shells, giving access to native APIs.
+
+**Steps:**
+1. **Install Capacitor:**
+   ```bash
+   cd app
+   npm install @capacitor/core @capacitor/cli
+   npx cap init "Sema Na Boychild" org.semanaboychild.app
+   ```
+
+2. **Configure for static export** — add to `next.config.mjs`:
+   ```js
+   const nextConfig = { output: 'export' };
+   ```
+
+3. **Build and sync:**
+   ```bash
+   npm run build
+   npx cap add android
+   npx cap sync android
+   ```
+
+4. **Open in Android Studio:**
+   ```bash
+   npx cap open android
+   ```
+
+5. **Build APK from Android Studio:**
+   - Build > Build Bundle(s) / APK(s) > Build APK(s)
+   - APK will be at `android/app/build/outputs/apk/debug/app-debug.apk`
+
+6. **For signed release APK:**
+   - Build > Generate Signed Bundle / APK
+   - Create a keystore and sign the APK
+
+### Option 3: PWA (Progressive Web App) — Simplest
+
+No APK needed. Users install directly from the browser.
+
+**Steps:**
+1. Add `manifest.json` to `app/public/` (same as TWA above)
+2. Add a service worker for offline support
+3. Add meta tags to `layout.tsx`:
+   ```tsx
+   <link rel="manifest" href="/manifest.json" />
+   <meta name="theme-color" content="#1B4332" />
+   <meta name="apple-mobile-web-app-capable" content="yes" />
+   ```
+4. Users tap "Add to Home Screen" in Chrome to install
+
+### Recommendation
+
+- **For quick distribution:** Use PWA (Option 3) — no Play Store needed
+- **For Play Store listing:** Use TWA (Option 1) — lightweight, auto-updates with web
+- **For native features (camera, push notifications):** Use Capacitor (Option 2)
 
 ---
 
 ## Project Structure
 ```
 app/
-├── .env.local                    # Environment variables (needs real keys)
+├── .env.local                    # Environment variables
 ├── supabase/migrations/
 │   ├── 001_initial_schema.sql    # All 23 tables
-│   └── 002_rls_policies.sql     # Row Level Security
+│   ├── 002_rls_policies.sql     # Row Level Security
+│   └── 003_storage_bucket.sql   # Media storage + social accounts
 ├── src/
 │   ├── middleware.ts             # Auth middleware
 │   ├── types/database.ts        # TypeScript DB types
-│   ├── lib/supabase/             # Client, server, middleware helpers
+│   ├── lib/
+│   │   ├── supabase/            # Client, server, middleware
+│   │   ├── social/              # Platform adapters
+│   │   │   ├── engine.ts        # Publishing orchestrator
+│   │   │   ├── facebook.ts      # Facebook Graph API
+│   │   │   ├── instagram.ts     # Instagram Graph API
+│   │   │   ├── tiktok.ts        # TikTok Content API
+│   │   │   ├── youtube.ts       # YouTube Data API v3
+│   │   │   └── twitter.ts       # Twitter API v2
+│   │   └── storage/upload.ts    # Supabase Storage upload
 │   ├── components/
-│   │   ├── ui/                   # shadcn components
-│   │   └── layout/               # Sidebar, Header
+│   │   ├── ui/                  # shadcn components
+│   │   ├── layout/              # Sidebar, Header
+│   │   └── landing/             # DonateSection, ScrollAnimate, CounterAnimate
 │   └── app/
-│       ├── page.tsx              # Public landing page
-│       ├── (auth)/login/         # Login page
-│       ├── (dashboard)/          # All admin pages
-│       │   ├── dashboard/
-│       │   ├── boys/ + [id]/
-│       │   ├── mentors/ + [id]/
-│       │   ├── donations/ + campaigns/
-│       │   ├── events/ + [id]/
-│       │   ├── content/ + new/
-│       │   ├── finance/
-│       │   ├── reports/
-│       │   └── settings/
-│       └── api/                  # All API routes
-│           ├── boys/, mentors/, schools/
-│           ├── donations/, expenses/
-│           ├── events/
-│           ├── content/
-│           ├── payments/mpesa/, stripe/
-│           ├── users/, contact/
-│           ├── dashboard/stats/
-│           └── activity-log/
+│       ├── page.tsx             # Public landing page
+│       ├── (auth)/login/
+│       ├── (dashboard)/         # Admin pages
+│       └── api/                 # API routes
+│           ├── social-accounts/ # OAuth connect + callback
+│           ├── content/[id]/    # Publish + comment
+│           └── payments/        # M-Pesa + Stripe
 ```
+
+---
+
+## Build Status
+- Build: PASSING
+- Local Supabase: CONFIGURED (Docker)
+- Social Media: ADAPTERS COMPLETE (need platform API keys to activate)
