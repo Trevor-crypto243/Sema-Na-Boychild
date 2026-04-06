@@ -37,9 +37,12 @@ export async function GET(_: NextRequest, { params }: { params: Promise<{ platfo
   }
 
   const clientId = process.env[config.clientIdEnv];
-  if (!clientId) {
+  if (!clientId || clientId.startsWith("your-")) {
     return NextResponse.json(
-      { error: `${platform} not configured. Set ${config.clientIdEnv} in environment variables.` },
+      {
+        error: `${platform} is not configured yet.`,
+        instructions: `Set ${config.clientIdEnv} in your .env.local file with your real API key. See PROGRESS.md for setup instructions.`,
+      },
       { status: 500 }
     );
   }
