@@ -242,7 +242,18 @@ export default function SettingsPage() {
                           <Button
                             variant="outline"
                             size="sm"
-                            onClick={() => window.open(`/api/social-accounts/connect/${platform.id}`, '_blank')}
+                            onClick={async () => {
+                              const res = await fetch(`/api/social-accounts/connect/${platform.id}`, { redirect: 'manual' });
+                              if (res.status === 500) {
+                                const data = await res.json();
+                                alert(data.error + '\n\n' + (data.instructions || ''));
+                              } else if (res.type === 'opaqueredirect' || res.status === 307 || res.status === 302) {
+                                // OAuth redirect — open in new tab
+                                window.open(`/api/social-accounts/connect/${platform.id}`, '_blank');
+                              } else {
+                                window.open(`/api/social-accounts/connect/${platform.id}`, '_blank');
+                              }
+                            }}
                           >
                             Connect
                           </Button>
